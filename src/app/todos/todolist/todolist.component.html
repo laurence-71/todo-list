@@ -1,0 +1,16 @@
+<div *ngFor="let todo of todoList">
+{{todo.name}}
+{{todo.description}}
+<button (click)="remove(todo)">Remove</button>
+
+</div>
+
+
+
+
+
+
+<p [title]="title"> todolist works!</p>
+ 
+
+<button (click)="myOnClick($event)">Creation</button>
