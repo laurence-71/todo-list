@@ -4,6 +4,7 @@ import { TodosComponent } from './todos.component';
 import { TodolistComponent } from './todolist/todolist.component';
 import { TodoComponent } from './todo/todo.component';
 import { AppModule } from '../app.module';
+import{HttpClientModule}from '@angular/common/http'; ;
 
 
 
@@ -16,7 +17,8 @@ import { AppModule } from '../app.module';
     
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule,
   ],
   exports:[TodosComponent,]
 

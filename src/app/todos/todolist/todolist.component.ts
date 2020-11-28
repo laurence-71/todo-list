@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Todo } from '../shared/todo.model';
+import { TodoService } from '../shared/todo.service';
 import { TodoComponent } from '../todo/todo.component';
 
 @Component({
@@ -9,44 +10,15 @@ import { TodoComponent } from '../todo/todo.component';
 })
 export class TodolistComponent {
 
-  public title: string = "hello !";
+  public todoList: Todo[];
 
-  public todoList: Todo[] = [];
-
-
-  constructor() {
-
-
-    this.todoList.push({
-      name: 'first',
-      description: 'bla,bla'
-    },
-      {
-        name: 'second',
-        description: 'bla,bla'
-      },
-      {
-        name: 'third',
-        description: 'bla,bla'
-      }
-    );
-
-
+  constructor(private todoService: TodoService) {
+    this.todoList = this.todoService.todoList;
   }
 
-  remove(todo:Todo): boolean {
-
-   const index=this.todoList.indexOf(todo);
-   if(-1 !==index){
-      this.todoList.splice(index, 1);
-      return true;
-      }else{
-        return false;
-      }
-    }
-
-  
-
+  remove(todo: Todo) {
+    this.todoService.remove(todo);
+  }
 
 }
 

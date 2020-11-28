@@ -1,5 +1,7 @@
 import { Component, } from '@angular/core';
+import { stringify } from 'querystring';
 import { Todo } from '../shared/todo.model';
+import { TodoService } from '../shared/todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -8,19 +10,16 @@ import { Todo } from '../shared/todo.model';
 })
 export class TodoComponent {
 
-  constructor() {
-
-
+  constructor(private todoService: TodoService) {
   }
 
-  public create(name: string, description: string) {
+  create(name:string, description:string){
     const todo = new Todo();
     todo.name = name;
     todo.description = description;
-
-    console.log(todo);
-
+    this.todoService.post(todo);
   }
+
 
 
 
