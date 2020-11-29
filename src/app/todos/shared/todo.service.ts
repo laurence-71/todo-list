@@ -36,7 +36,7 @@ export class TodoService {
   }
  
 
-  remove(todo: Todo) {
+  delete(todo: Todo) {
     const index = this.todoList.indexOf(todo);
     this.todoList.splice(index, 1);
    this.put(this.todoList);
@@ -59,8 +59,6 @@ export class TodoService {
         console.log("error");
       }
     )
-
-
   }
 
 }

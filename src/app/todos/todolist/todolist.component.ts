@@ -16,8 +16,8 @@ export class TodolistComponent {
     this.todoList = this.todoService.todoList;
   }
 
-  remove(todo: Todo) {
-    this.todoService.remove(todo);
+  delete(todo: Todo) {
+    this.todoService.delete(todo);
   }
 
 }
