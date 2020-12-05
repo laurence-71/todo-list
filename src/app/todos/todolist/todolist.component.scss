@@ -1,0 +1,25 @@
+  .container{
+      height:500px;
+      background-color: rgb(127, 127, 241);
+      border: rebeccapurple solid 2px;
+  } 
+
+.spinner{
+    color:blue;
+}
+
+.title{
+color:rgb(77, 17, 37);
+background-color: blueviolet;
+}
+
+h1{
+  font-size: 40px;
+}
+.todoItem:nth-child(odd) {
+  background-color: rgb(241, 127, 222);
+
+}
+.todoItem:nth-child(even){
+  background-color: rgb(107, 238, 238);
+}

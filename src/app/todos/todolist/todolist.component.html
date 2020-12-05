@@ -1,16 +1,30 @@
-<div *ngIf="!todoList.length">
+<ion-grid class="container">
+     <div class="btn">
+          <ion-button color="light" routerLink="todo" >New</ion-button>
+     </div>
+<h1>List</h1>
+<ion-row  >
+     <ion-col size=12>
+<div *ngIf="error">
+  <button (click)="retry()">Try Again</button>
+ </div>
+
+<div *ngIf="!todoList && !error">
+     <diV class="spinner">
+   <ion-spinner name="crescent"> </ion-spinner>
     loading
-</div>
-<div *ngFor="let todo of todoList">
-{{todo.name}}
-{{todo.description}}
-<button (click)="delete(todo)">Delete</button>
-
+     </diV>
 </div>
 
+<div *ngFor="let todo of todoList"  class="todoItem"  >
+<h2 class="title">{{todo.name}}</h2>
+<ion-button [routerLink]="['detail', todo.name]">Detail</ion-button>
 
-
-
+<ion-button color="danger" (click)="delete(todo)"><ion-icon name="trash"></ion-icon></ion-button>
+</div>
+</ion-col>
+</ion-row>
+</ion-grid>
 
 
 

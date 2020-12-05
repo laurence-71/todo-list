@@ -1,9 +1,21 @@
 
-
+<div class="container">
 <h2>Creation</h2>
- 
-   <input placeholder="name" #name>
-   <br>
-   <input placeHolder="description" #description>
-   <br>
-   <button (click)='create(name.value, description.value)'>Create</button>
+
+<form [formGroup]="todoForm" (ngSubmit)="create()" class="form">
+   <ion-item class="item">
+      <ion-label>Name</ion-label>
+      <ion-input  formControlName="name">
+      <span *ngIf="!todoForm.get('name').valid && todoForm.get('name').dirty">
+         Not valid
+      </span>
+      </ion-input>
+   </ion-item>
+   <ion-item class="item">
+      <ion-label>Description</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+   </ion-item>
+   <ion-button color="light" type="submit">Create</ion-button>
+ </form>
+<div>
+  

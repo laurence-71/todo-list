@@ -1,63 +1,58 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './todo.model';
-import{environment} from './../../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Key } from 'protractor';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  public todoList: Todo[] = [];
-  constructor(private http: HttpClient) {
-    const options = {
-      headers: new HttpHeaders({
-        "secret-key":environment.jsonbin. key,
-      })
-    }
+  public todoList: Todo[];
+  constructor(private http: HttpClient) { }
 
-    this.http.get(environment.jsonbin.url, options).subscribe(
-      (todoList: Todo[]) => {
-        todoList.forEach(todo => {
-          this.todoList.push(todo)
-        }
-
-        )
-      },
-      () => {
-        console.log("error");
-      }
-    )
+  get(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(environment.jsonbin.url,
+      {
+        headers: new HttpHeaders({
+          "secret-key": environment.jsonbin.key,
+        })
+      });
   }
 
 
   post(todo: Todo) {
-    this.todoList.push(todo);
- this.put(this.todoList);
-  }
- 
+    const tab = [];
+    this.todoList.forEach(item => {
+      tab.push(item);
 
-  delete(todo: Todo) {
-    const index = this.todoList.indexOf(todo);
-    this.todoList.splice(index, 1);
-   this.put(this.todoList);
-  }
-
-  put(todoList: Todo[]){
-
-    const options = {
-      headers: new HttpHeaders({
-        "secret-key": environment.jsonbin.key,
-        "Content-Type": "application/json",
-        "versioning": "false"
-      })
-    }
-    this.http.put(environment.jsonbin.url, this.todoList, options).subscribe(
+    });
+    tab.push(todo);
+    this.put(tab).subscribe(
       () => {
-        console.log('ok');
+        this.todoList.push(todo);
       },
       () => {
-        console.log("error");
       }
+    );
+
+  }
+
+
+ 
+
+  put(todoList: Todo[]): Observable<Todo[]> {
+    return this.http.put<Todo[]>(environment.jsonbin.url, todoList,
+
+      {
+        headers: new HttpHeaders({
+          "secret-key": environment.jsonbin.key,
+          "Content-Type": "application/json",
+          "versioning": "false"
+        })
+      }
+
+
     )
   }
 
