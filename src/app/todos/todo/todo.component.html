@@ -4,7 +4,7 @@
 
 <form [formGroup]="todoForm" (ngSubmit)="create()" class="form">
    <ion-item class="item">
-      <ion-label>Name</ion-label>
+      <ion-label>Name :</ion-label>
       <ion-input  formControlName="name">
       <span *ngIf="!todoForm.get('name').valid && todoForm.get('name').dirty">
          Not valid
@@ -12,10 +12,11 @@
       </ion-input>
    </ion-item>
    <ion-item class="item">
-      <ion-label>Description</ion-label>
+      <ion-label>Description :</ion-label>
       <ion-textarea formControlName="description"></ion-textarea>
    </ion-item>
-   <ion-button color="light" type="submit">Create</ion-button>
- </form>
+    <ion-button class="btnCreate" color="pink" routerLink='todos'><ion-icon name="chevron-back-outline"></ion-icon></ion-button>
+   <ion-button class="btnCreate" color="pink" type="submit">Create</ion-button>
+</form>
 <div>
   

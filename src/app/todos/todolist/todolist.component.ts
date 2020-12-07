@@ -48,10 +48,16 @@ export class TodolistComponent {
     );
 
   }
+public myDate:string  =new Date().toISOString();
+   ngOnInit(){
+     console.log(this.myDate);
+    return this.myDate;
+
 }
 
 
-
+ 
+   }
 
 
 
