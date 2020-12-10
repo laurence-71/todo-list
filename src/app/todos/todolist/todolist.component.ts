@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from '../shared/todo.model';
 import { TodoService } from '../shared/todo.service';
 import { TodoComponent } from '../todo/todo.component';
@@ -9,20 +9,21 @@ import { TodoComponent } from '../todo/todo.component';
   templateUrl: './todolist.component.html',
   styleUrls: ['./todolist.component.scss'],
 })
-export class TodolistComponent {
-
+export class TodolistComponent implements OnInit{
+public disabled:boolean;
   public todoList: Todo[];
   public error: Boolean;
+  public todoDisabled;
+
   constructor(private todoService: TodoService) {
     this.retry();
 
   }
   retry(): void {
     this.todoService.get().subscribe(
-
       (todoList: Todo[]) => {
         this.error = false;
-        this.todoList = this.todoService.todoList = todoList;
+        this.todoList = todoList;
       },
       () => {
         this.error = true;
@@ -31,33 +32,31 @@ export class TodolistComponent {
   }
 
   delete(todo: Todo) {
-    const tab = [];
-    this.todoList.forEach(item => {
-      if(item!=todo){
-        tab.push(item);
-      }
-    });
-     
-    this.todoService.put(tab).subscribe(
+ 
+    this.disabled=true;
+    this.todoDisabled = todo;
+    this.todoService.delete(todo).subscribe(
       () => {
-        const index = this.todoList.indexOf(todo);
-        this.todoService.todoList.splice(index, 1);
+        this.disabled = true;
+        
+        
+
       },
       () => {
       }
-    );
+    )
+    }
+    
 
-  }
-public myDate:string  =new Date().toISOString();
-   ngOnInit(){
-     console.log(this.myDate);
+  public myDate: string = new Date().toISOString();
+  ngOnInit() {
     return this.myDate;
 
+  }
+
+
+
 }
-
-
- 
-   }
 
 
 

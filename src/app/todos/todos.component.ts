@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { Todo } from './shared/todo.model';
 
 @Component({
@@ -7,12 +8,19 @@ import { Todo } from './shared/todo.model';
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss'],
 })
-export class TodosComponent  {
+export class TodosComponent  implements OnInit{
 
-  constructor() {
+  constructor(private platform:Platform) {
+   
    
   }
 
-  ngOnInit() { }
-
+  ngOnInit(): void {
+    this.platform.backButton.subscribeWithPriority(0,
+      ()=>{
+        alert("Done");
+      },
+     
+    );
+  }
 }

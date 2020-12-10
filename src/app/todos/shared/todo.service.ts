@@ -4,6 +4,7 @@ import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Key } from 'protractor';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +13,19 @@ export class TodoService {
   constructor(private http: HttpClient) { }
 
   get(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(environment.jsonbin.url,
-      {
-        headers: new HttpHeaders({
-          "secret-key": environment.jsonbin.key,
-        })
-      });
+    const options = {
+      headers: new HttpHeaders({
+        "secret-key": environment.jsonbin.key,
+      })
+    };
+    return this.http.get<Todo[]>(environment.jsonbin.url, options).pipe(
+      tap(
+        (todoList: Todo[]) => {
+          this.todoList = todoList;
+        },
+        () => { }
+      )
+    )
   }
 
 
@@ -25,21 +33,43 @@ export class TodoService {
     const tab = [];
     this.todoList.forEach(item => {
       tab.push(item);
-
     });
     tab.push(todo);
-    this.put(tab).subscribe(
+    return this.put(tab).pipe(
+      tap(
+        () => {
+          this.todoList.push(todo);
+        },
+        () => {
+          console.log("recommencer");
+          
+        }
+      )
+    );
+  }
+
+  delete(todo: Todo){
+    const tab = [];
+    this.todoList.forEach(item => {
+      if (item != todo) {
+        tab.push(item);
+      }
+    });
+    return this.put(tab).pipe(
+      tap(
       () => {
-        this.todoList.push(todo);
+        const index = this.todoList.indexOf(todo);
+        this.todoList.splice(index, 1);
       },
       () => {
       }
+      )
     );
-
+   
   }
 
 
- 
+
 
   put(todoList: Todo[]): Observable<Todo[]> {
     return this.http.put<Todo[]>(environment.jsonbin.url, todoList,
@@ -56,8 +86,8 @@ export class TodoService {
     )
   }
 
- 
-  
+
+
 }
 
 
